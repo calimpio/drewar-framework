@@ -29,8 +29,7 @@ export class UpdatePostValidation implements IValidable<PostDTO>{
 		},
 		likes: {
 			type: ValidationTypes.number
-		},
-
+		},		
     }
     props!: PostDTO;
 

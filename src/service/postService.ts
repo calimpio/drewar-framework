@@ -10,21 +10,26 @@ import { findAndCountAll } from "../util/services";
 
 export class PostService {
 
-    static async create(postDTO: IPostDTO, user?: User, models?: { [name: string]: any; }, auth?: Device) {
-        try {
+    static async create(postDTO: IPostDTO, user: User, models?: { [name: string]: any; }, auth?: Device) {
+        try {           
             return (await Post.create({
                 title: postDTO.title,
                 content: postDTO.content,
                 likes: postDTO.likes,
+                author: user,
 
             }, { logging: Config.Props.IsDev })).toDTO();
         } catch (err) {
-            throw new ErrorMessageDTO({
-                title: "Error at creating post",
-                origin: "API post Create",
-                description: "server error",
-                status: 500
-            })
+            if (!(err instanceof ErrorMessageDTO))
+                throw new ErrorMessageDTO({
+                    title: "Error at creating post",
+                    origin: "API post Create",
+                    description: "server error",
+                    status: 500
+                })
+            else {
+                throw err;
+            }
         }
     }
 

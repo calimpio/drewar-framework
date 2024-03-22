@@ -5,7 +5,7 @@ import { Optional } from "sequelize";
 import { API_DB } from "../config";
 
 export interface IUser {
-    id: bigint,
+    id: string,
     email: string,
     username: string,
     role?: UserRole,
@@ -24,7 +24,7 @@ interface UserCreationAttributes extends Optional<IUser, "id">, Omit<IUser, "id"
 export default class User extends Model<IUser, UserCreationAttributes> implements IUserDao, IUser {
     @PrimaryKey
     @Column
-    id!: bigint;
+    id!: string;
 
     @Column
     email!: string;
@@ -48,7 +48,7 @@ export default class User extends Model<IUser, UserCreationAttributes> implement
     deleted!: boolean;    
 
     public alterDTO(data: UserDTO) {
-        data.id = Hash.encodeId(this.get('id'));
+        data.id = this.get('id');
         data.email = this.get("email");
         data.name = this.get('name');
         data.username = this.get('username');

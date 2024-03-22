@@ -3,10 +3,9 @@ const { DataTypes } = require("sequelize");
 module.exports = {
     Posts: {
         id: {
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
-            type: DataTypes.BIGINT(11),
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,            
         },
         title: {
             type: DataTypes.STRING,
@@ -19,8 +18,18 @@ module.exports = {
         },        
         likes: {
             type: DataTypes.BIGINT(11),
+            allowNull: false,            
+        },
+        author_id: {
+            type: DataTypes.UUID,
             allowNull: false,
-        },        
+            references:{
+                model:{
+                    tableName: "users"
+                },
+                key: "id"
+            }
+        },
         createdAt: {
             allowNull: false,
             type: DataTypes.DATE,
