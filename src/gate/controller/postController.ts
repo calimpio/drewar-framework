@@ -6,18 +6,18 @@ import { Requests } from "../requests";
 import { CreatePostValidation, UpdatePostValidation } from "../validation/postValidation";
 
 export class PostController {
-    static async create(req: Request, res: Response) {
+    static async create(req: Requests.UserAuth, res: Response) {
         try {
             const validation = await Validation.validate(new CreatePostValidation(), req.body);
-            const dto = await PostService.create(validation.props);
+            const dto = await PostService.create(validation.props, req.user);
             return res.status(200).json(dto);
         } catch (err) {
             if (err instanceof ValidationErrorDTO) {
-                return res.status(400).json(new ErrorMessageDTO({ 
-                    title: "creating post", 
-                    origin: "api", 
-                    description: "data match errors", 
-                    errors: err, status: 400 
+                return res.status(400).json(new ErrorMessageDTO({
+                    title: "creating post",
+                    origin: "api",
+                    description: "data match errors",
+                    errors: err, status: 400
                 }))
             }
             else if (err instanceof ErrorMessageDTO) {
@@ -27,8 +27,8 @@ export class PostController {
     }
 
     static async getAll(req: Requests.UserAuth, res: Response) {
-        try {           
-            const dto = await PostService.getAll(req.query , req.user, req.models, req.auth);
+        try {
+            const dto = await PostService.getAll(req.query, req.user, req.models, req.auth);
             return res.status(200).json(dto);
         } catch (err) {
             if (err instanceof ErrorMessageDTO) {
@@ -41,20 +41,20 @@ export class PostController {
         try {
             const validation = await Validation.validate(new UpdatePostValidation(), req.body);
             const dto = await PostService.update(
-                validation.props, 
-                req.user, 
-                req.models, 
+                validation.props,
+                req.user,
+                req.models,
                 req.auth
             );
             return res.status(200).json(dto);
         } catch (err) {
             if (err instanceof ValidationErrorDTO) {
                 return res.status(400).json(
-                    new ErrorMessageDTO({ 
-                        title: "creating post", 
-                        origin: "api", description: "data match errors", 
-                        errors: err, 
-                        status: 400 
+                    new ErrorMessageDTO({
+                        title: "creating post",
+                        origin: "api", description: "data match errors",
+                        errors: err,
+                        status: 400
                     }))
             }
             else if (err instanceof ErrorMessageDTO) {
@@ -64,7 +64,7 @@ export class PostController {
     }
 
     static async delete(req: Requests.UserAuth, res: Response) {
-        try {           
+        try {
             const dto = await PostService.destroy(req.user, req.models, req.auth);
             return res.status(200).json(dto);
         } catch (err) {

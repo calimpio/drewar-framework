@@ -14,15 +14,15 @@ export namespace Requests {
         models?: {
             [name: string]: any
         }
-        auth?: Device
+        auth: Device
     }
 
     export interface UserAuth extends ModelFinder {
         headers: {
             authorization?: string;
         }
-        user?: User
-    }
+        user: User
+    }    
     
     export interface GetAllUsers extends UserAuth {
         query: PageQuerys

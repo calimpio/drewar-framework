@@ -181,7 +181,7 @@ export class UserService {
 
     static async destroy(user: User) {
         user.set("deleted", true);
-        return Hash.encodeId((await user.save()).get('id'))
+        return (await user.save()).get('id')
     }
 
 

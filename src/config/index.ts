@@ -2,7 +2,7 @@
 import { Sequelize } from "sequelize-typescript";
 import path from 'path';
 import { config } from "dotenv";
-import { Migrations } from "./migrations";
+import { Databases } from "./databases";
 config({ path: path.join(__dirname, '../.env') })
 
 export enum APIProfileEnum {
@@ -71,10 +71,9 @@ export class Config {
 
 
 Config.Props.Profile = (process.env.PROFILE as APIProfileEnum) || APIProfileEnum.DEV;
-
 Config.Props.IsDev = Config.Props.Profile == Config.Enum.APIProfileEnum.DEV;
 
-const option = Migrations[Config.Props.Profile];
+const option = Databases[Config.Props.Profile];
 option.loggin = Config.Props.IsDev;
 export const API_DB = new Sequelize(option);
 

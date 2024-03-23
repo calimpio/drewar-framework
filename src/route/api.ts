@@ -1,67 +1,44 @@
-import { Router } from 'express';
-import { DeviceController } from '../gate/controller/deviceController';
+import {Router } from 'express';
 import User from '../model/user';
 import { UserController } from '../gate/controller/userController';
 import { Middlewares } from './middlewares';
 import { PostController } from '../gate/controller/postController';
 import Post from '../model/post';
+import { Routers } from './routers';
+import { Requests } from '../gate/requests';
 
 
 
-//import { Config } from '../config';
-//const HashType = Config.Enum.HashTypeEnum;
-
-// public-routes
+// API
 const api = Router();
-const apiPublic = Router();
-api.use(apiPublic)
-{
-    //apiPublic.post("/init", DeviceController.init)    
-}
 
-// private-routes
-const apiPrivate = Router();
-api.use(apiPrivate);
-apiPrivate.use(Middlewares.ApiKey())
-{
-    //auth-route
-    const auth = Router();
-    apiPrivate.use("/auth", auth);
-    {
+//Public-API
+Routers.createApp(api, (apiPublic) => {
+    //apiPublic.post("/init", DeviceController.init)    
+});
+
+
+//Private-API
+Routers.createGroup(api, [Middlewares.ApiKey()], (apiPrivate) => {
+    Routers.createPath<Requests.ModelFinder>(apiPrivate, "/auth", (auth) => {
         auth.post("/", UserController.create);
         auth.post("/login", UserController.login);
-    }
-    // user-routes
-    const user = Router();
-    apiPrivate.use('/users', user);
-    {
-        //User-auth-routes
-        const userAuth = Router();
-        user.use(userAuth);
-        userAuth.use(Middlewares.UserAuth());
-        {
-            userAuth.get("/", UserController.getAll);
-            userAuth.get("/:user", Middlewares.FindById("user", User), UserController.get);
-            userAuth.put("/:user", Middlewares.FindById("user", User), UserController.update);
-            userAuth.delete("/:user", Middlewares.FindById("user", User), UserController.destroy);
-        }
-    }
-    // user-routes
-    const post = Router();
-    apiPrivate.use('/posts', post);
-    {
-        //post-userAuth-routes
-        const post_userAuth = Router();
-        post.use(post_userAuth);
-        post_userAuth.use(Middlewares.UserAuth());
-        {
-            post_userAuth.post("/", PostController.create);
-            post_userAuth.get("/", PostController.getAll);
-            post_userAuth.put("/:post", Middlewares.FindById("post", Post), PostController.update);
-            post_userAuth.delete("/:post", Middlewares.FindById("post", Post), PostController.delete);
-        }
-    }
-}
+    });
+    Routers.createGroup(apiPrivate, [Middlewares.UserAuth()], (userAuth) => {
+        Routers.createPath<Requests.UserAuth>(userAuth, "/users", (users) => {
+            users.get("/", UserController.getAll);
+            users.get("/:user", Middlewares.FindById("user", User), UserController.get);
+            users.put("/:user", Middlewares.FindById("user", User), UserController.update);
+            users.delete("/:user", Middlewares.FindById("user", User), UserController.destroy);
+        });
 
+        Routers.createPath<Requests.UserAuth>(userAuth, "/posts", (posts) => {
+            posts.post("/", PostController.create);
+            posts.get("/", PostController.getAll);
+            posts.put("/:post", Middlewares.FindById("post", Post), PostController.update);
+            posts.delete("/:post", Middlewares.FindById("post", Post), PostController.delete);
+        });
+    });
+});
 
 export default api;

@@ -1,7 +1,7 @@
 import { SequelizeOptions } from "sequelize-typescript";
 import { APIProfileEnum } from ".";
 
-export const Migrations: Record<APIProfileEnum, SequelizeOptions & { loggin?: boolean }> = {
+export const Databases: Record<APIProfileEnum, SequelizeOptions & { loggin?: boolean }> = {
   "development": {
     "username": "root",
     "password": "",
