@@ -1,8 +1,7 @@
 import { NextFunction, Response, IRouter, Router } from "express";
-import { Requests } from "src/gate/requests";
 
 
-export namespace Routers {    
+export namespace Routes {    
 
     interface IHandler<Req, Res extends Response = Response> {
         (req: Req, res: Res, next: NextFunction): void

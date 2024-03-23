@@ -1,7 +1,6 @@
 
-FROM useparagon/ts-node:latest
+FROM dockette/nodejs:v18
 
-COPY ./node_modules ./node_modules
 COPY ./src/config ./src/config
 COPY ./src/dto ./src/dto
 COPY ./src/gate ./src/gate
@@ -16,5 +15,5 @@ COPY ./src/Server.ts ./src/Server.ts
 COPY ./package.json ./package.json
 COPY ./tsconfig.json ./tsconfig.json
 
-
-
+RUN npm i -g ts-node
+RUN npm i

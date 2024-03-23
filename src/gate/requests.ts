@@ -24,7 +24,7 @@ export namespace Requests {
         user: User
     }    
     
-    export interface GetAllUsers extends UserAuth {
+    export interface GetAll extends UserAuth {
         query: PageQuerys
     }
 

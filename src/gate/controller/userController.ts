@@ -104,7 +104,7 @@ export class UserController {
         }
     }
 
-    static async getAll(req: Requests.GetAllUsers, res: Response) {
+    static async getAll(req: Requests.GetAll, res: Response) {
         try {
             const users = await UserService.getAll(req.query);
             return res.json(users);

@@ -26,7 +26,7 @@ export class PostController {
         }
     }
 
-    static async getAll(req: Requests.UserAuth, res: Response) {
+    static async getAll(req: Requests.GetAll, res: Response) {
         try {
             const dto = await PostService.getAll(req.query, req.user, req.models, req.auth);
             return res.status(200).json(dto);

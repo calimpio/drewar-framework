@@ -12,7 +12,7 @@ ${options.withValidation ?
 
 export class ${model}Controller {
     ${options.withService && options.withValidation ?
-        `static async create(req: Request, res: Response) {
+        `static async create(req: Requests.UserAuth, res: Response) {
         try {
             const validation = await Validation.validate(new Create${model}Validation(), req.body);
             const dto = await ${model}Service.create(validation.props);
@@ -32,7 +32,7 @@ export class ${model}Controller {
         }
     }
 
-    static async getAll(req: Requests.UserAuth, res: Response) {
+    static async getAll(req: Requests.GetAll, res: Response) {
         try {           
             const dto = await ${model}Service.getAll(req.query , req.user, req.models, req.auth);
             return res.status(200).json(dto);
