@@ -1,6 +1,8 @@
 # DREWAR
 It is a project created for Camilo Barbosa to create a strong web!
-using for backend: `Express js` `Sequelize` `Typescript` `Nodejs`
+using for backend: `Express js` `Sequelize` `Typescript` `Nodejs 18`
+
+
 
 ## Install
 
@@ -8,7 +10,8 @@ clone this repo:
 `$git clone https://github.com/calimpio/drewar` 
 
 Install node modules
-`$npm i`
+- `$npm i -g ts-node`
+- `$npm i`
 
 Generate `.env`
 `$npm run env:generate`
@@ -45,29 +48,19 @@ Generate `.env`
         3. Web
     
         
-## Comandos
-- ### Comando para crear un `Model`
+## Commands
+- ### Create a  `Model`
     `$ npm run make:model` `[modelName][:["withDTO"]<optional>]` `[prop1]=[type]` `[...props]`
-    - ex: `$ npm run make:model Service description=string`.
+    - ex: `$ npm run make:model Post description=string`.
+        Create only a Model
 
-        Crea un modelo `Service` con la propiedad `descripcion` de tipo `string`
-
-    - ex: `$ npm run make:model Service:withDTO description=string`
-        
-        Crea un modelo `Service` importando a un `ServiceDTO` con la propiedad `descripcion` de tipo `string`
-
--  ### Comando para crear un `DTO`
+-  ### Create a `DTO`
     `$ npm run make:dto` `[dtoName][:[withModel]<optional>]` `[prop1]=[type]` `[...props]`
-    - ex: `$ npm run make:dto MyService description=string`.
+    - ex: `$ npm run make:dto Post description=string`.
+        Create only a DTO
+      
 
-        Crea un dto `Myervice` con la propiedad `descripcion` de tipo `string`
-
-    - ex: `$ npm run make:dto MyService:withModel description=string`
-        
-        Crea un dto `MyService` implementando un `IDTOtoDao<IServiceDTO>` con la propiedad `descripcion` de tipo `string`
-
--  ### Comando para crear un `(Model, Service, DTO, Validation y Controller)`
+-  ### Create a Resources `(Model, Service, DTO, Validation y Controller)`
     `$ npm run make:resource` `[modelName]` `[prop1]=[type]` `[...props]`
-    - ex: `$ npm run make:resource MyResource description=string`.
-
-        Crea todo el recurso para el modelo `MyResource`    
+    - ex: `$ npm run make:resource Post title=string `.
+        Create all resources `Post`    

@@ -1,7 +1,7 @@
 import { NextFunction, Response, IRouter, Router } from "express";
 
 
-export namespace Routes {    
+export namespace Routes {
 
     interface IHandler<Req, Res extends Response = Response> {
         (req: Req, res: Res, next: NextFunction): void
@@ -15,23 +15,23 @@ export namespace Routes {
         use(...handlers: Array<IHandler<Req, Res>>): void
     }
 
-    export function createApp(parent: any, group: (portal: IRouter) => void) {
+    export function createApp(parent: IRouter | IDRouter<any>, group: (portal: IRouter) => void) {
         const portal = Router();
         (parent as IRouter).use(portal);
         group(portal);
     }
 
 
-    export function createGroup<Req, Res extends Response = Response>(parent: any, middlewares: Array<IHandler<Req, Res>>, group: (portal: IDRouter<Req, Res>) => void) {
+    export function createGroup<Req, Res extends Response = Response>(parent: IRouter | IDRouter<any>, middlewares: Array<IHandler<Req, Res>>, group: (portal: IDRouter<Req, Res>) => void) {
         createApp(parent, (portal) => {
             (portal as IDRouter<Req, Res>).use(...middlewares);
             group(portal as IDRouter<Req, Res>);
         })
     }
 
-    export function createPath<Req, Res extends Response = Response>(parent: any, path: string, group: (portal: IDRouter<Req, Res>) => void) {
+    export function createPath<Req, Res extends Response = Response>(parent: IRouter | IDRouter<any>, path: string, group: (portal: IDRouter<Req, Res>) => void) {
         const portal = Router();
         (parent as IRouter).use(path, portal);
         group(portal as IDRouter<Req, Res>);
-    }    
+    }
 }

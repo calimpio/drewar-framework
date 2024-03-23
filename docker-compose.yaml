@@ -1,7 +1,7 @@
 services:
-  drewareApi: 
+  drewarApp: 
     image: drewaredev:v1  
     ports:
       - 8080:8080
       - 8081:8081
-    command: npm run run:type
+    command: npm run run:ts

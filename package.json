@@ -1,6 +1,6 @@
 {
   "name": "drewar-framework",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "scripts": {
     "build": "npx ts-node build.ts",
@@ -9,7 +9,7 @@
     "start": "node -r module-alias/register ./dist --env=production",
     "start:dev": "nodemon",
     "run:dist": "node ./dist/index.js",
-    "run:type": "npx ts-node ./src/index.ts",
+    "run:ts": "npx ts-node ./src/index.ts",
     "watch": "npx ts-node ./bin/watch.ts | npx webpack --watch",
     "make:model": "npx ts-node ./bin/make/model.ts",
     "make:dto": "npx ts-node ./bin/make/dto.ts",
